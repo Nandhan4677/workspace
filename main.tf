@@ -130,3 +130,55 @@ resource "azurerm_kubernetes_cluster" "aks" {
     type = "SystemAssigned"
   }
 }
+
+#event hub namespace
+
+resource "azurerm_eventhub_namespace" "eventhub-ns" {
+  name                = "${var.eventhub-namespace}-ehnamespace"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  sku                 = "Standard"
+  capacity            = 2
+
+  tags = {
+    environment = "non-prod"
+  }
+}
+
+resource "azurerm_eventhub_namespace_authorization_rule" "eventhub-namespace-authorization-rule" {
+  name                = "${var.eventhub-namespace-authorization-rule}-nsauth-rule"
+  namespace_name      = azurerm_eventhub_namespace.eventhub-ns.name
+  resource_group_name = azurerm_resource_group.rg.name
+
+  listen = true
+  send   = true
+  manage = false
+}
+
+resource "azurerm_eventhub" "eventhub" {
+  name                = "${var.eventhub}-eh1"
+  namespace_name      = azurerm_eventhub_namespace.eventhub-ns.name
+  resource_group_name = azurerm_resource_group.rg.name
+
+  partition_count   = 2
+  message_retention = 1
+}
+
+resource "azurerm_eventhub_authorization_rule" "test" {
+  name                = "${var.eventhub}-enauth-rule"
+  namespace_name      = azurerm_eventhub_namespace.eventhub-ns.name
+  eventhub_name       = azurerm_eventhub.eventhub.name
+  resource_group_name = azurerm_resource_group.rg.name
+
+  listen = true
+  send   = true
+  manage = true
+}
+
+resource "azurerm_eventhub_consumer_group" "eventhub-cg" {
+  name                = "${var.eventhub-consumer-group}-ehcg"
+  namespace_name      = azurerm_eventhub_namespace.eventhub-ns.name
+  eventhub_name       = azurerm_eventhub.eventhub.name
+  resource_group_name = azurerm_resource_group.rg.name
+  user_metadata       = "some-meta-data"
+}

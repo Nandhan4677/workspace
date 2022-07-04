@@ -48,3 +48,23 @@ variable "network-profile" {
     name = "kubernetes-cluster"
   description = "kubernetes clusters"
  }
+
+  variable "eventhub-namespace" {
+    name = "my-eventhub-namespace"
+  description = "eventhub name spaces"
+ }
+
+  variable "eventhub-namespace-authorization-rule" {
+    name = "my-eventhub-authorization-rule"
+  description = "eventhub name spaces authorization rule"
+ }
+
+ variable "eventhub" {
+    name = "my-eventhub"
+  description = "eventhub"
+ }
+
+ variable "eventhub-consumer-group" {
+    name = "my-eventhub-consumergroup"
+  description = "eventhub"
+ }
