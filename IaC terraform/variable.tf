@@ -68,3 +68,9 @@ variable "network-profile" {
     name = "my-eventhub-consumergroup"
   description = "eventhub."
  }
+
+ variable "virtualnetwork" {
+    name = "my-vnet"
+  description = "virtual network for all resources."
+  
+ }
