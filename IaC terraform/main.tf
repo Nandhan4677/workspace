@@ -204,3 +204,19 @@ resource "azurerm_network_ddos_protection_plan" "ddos-plan" {
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 }
+
+# Storage account to hold diag data from VMs and Azure Resources
+
+resource "azurerm_storage_account" "storage-acc-for-vnet" {
+  name                     = "${var.storage-account-for-vnet}"
+  resource_group_name      = azurerm_resource_group.azurg.name
+  location                 = azurerm_resource_group.azurg.location
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+
+  tags = {
+    environment = "Staging"
+    owner       = "chapalasai.nandhan@cbre.com"
+    costcenter  = "IT"
+  }
+}
