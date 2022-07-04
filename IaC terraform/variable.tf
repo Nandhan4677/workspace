@@ -74,3 +74,8 @@ variable "network-profile" {
   description = "virtual network for all resources."
   
  }
+
+ variable "ddos-plan" {
+    name = "my-ddos-plan"
+  description = "ddos plan for virtual network."
+ }
