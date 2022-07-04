@@ -66,5 +66,5 @@ variable "network-profile" {
 
  variable "eventhub-consumer-group" {
     name = "my-eventhub-consumergroup"
-  description = "eventhub"
+  description = "eventhub."
  }

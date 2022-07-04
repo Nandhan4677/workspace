@@ -131,7 +131,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 }
 
-#event hub namespace
+#event hub namespace eventhub authorization rules and consumer groupes
 
 resource "azurerm_eventhub_namespace" "eventhub-ns" {
   name                = "${var.eventhub-namespace}-ehnamespace"
